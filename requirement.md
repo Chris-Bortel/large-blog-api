@@ -58,24 +58,32 @@ Documentation for the development of the [Large Blog](./README.md)
 
 ### **Data Model** <br>
 
-As we will be operating a virtual storefront, this application requires at least 2 data models to be fully functional
+This will hold all our app’s database Schemas and Models.
+
+- Articles
+- Users
 
 - The following fields/data types must be supported by your data model
 
 1. Articles: _(How do we save the article in the db? Formatting it and the like is different from what I have done in the past)_
 
 ```
-   name: {type: string, Required
 
-   category: {type: A pre-listed array, required}
+  - title: {type: string, required}
 
-   description: {type: string, required}
+  - likes: {type: Number}
 
-   content: {type: Number, required}
+  - author: {type: string, required, role: [], user-identification}
 
-     - **How am I going to do this?**
+  - article_text: {type: string, required}
 
-    User-ID: {type: string, Required (unique username from Users’ collection.)}
+  - content: {type: Number, required}
+
+    - **How am I going to do this?**
+
+  - comments: {type: string, --- it will need to be attached to the user object of the commenter}
+
+  - category: {type: A pre-listed array, required}
 ```
 
 1. Users
@@ -102,59 +110,67 @@ As we will be operating a virtual storefront, this application requires at least
 
 - AuthenticateToken
 
-### **Main server methods**
+### **Controllers: Main server methods**
 
 - View the articles (route handlers):
 
-1. `getAll():`
+1. `getAll()`
 
    - Query DB
    - Uses model finder
    - Returns an array of objects(list of all articles)
 
-1. `getOne():`
+1. `getOne()`
 
    - Query the database,
    - Find one item (article) using the model finder and the item ID(name?)
    - Return single object of the item
 
-1. `getAuthorsArticles():` filtering the results based on user id
+1. `getAuthorsArticles()` filtering the results based on user id
    -Within the route, use the bearer auth middleware to check for user and the user’s permissions
 
    - Query the database, find all the **articles** that related to this specific username
    - Return an array contains all the **articles**
 
-1. `getByCategories`: handler: requires filtering
+1. `getByCategories()`
 
    - Query the database, find everything,
    - Returns list of all the records in the category.
    - API should return an object containing count and a results array.
 
-1. `createArticle():`
+1. `createArticle()`
 
    - Make sure that all of the middleware is being hit (bearerAuth, ACL)
    - Grab users input validate user model and then send
    - Send to data model … (need to research what goes on here)
    - On creating the **article** we will hit the a If users in logged in, Post item to the database, attach item to the users id, and then return the created **article** in formatted json
 
-1. `updateArticle():`
+1. `updateArticle()`
 
    - Logged in users, can UPDATE their article, returns updated json to seller
 
-1. `deleteArticle():`
-   - Logged in users can DELETE their article, return string saying (item name: deleted)
-     - article.`findOneAndDelete()`
+1. `likeArticle()`
+
+   - POST route
+
+1. `commentArticle()`
+
+- POST to the article obj
+
+1. `deleteArticle()`
+   - Logged in users can DELETE their article, return string saying (article name: deleted)
+   - article.`findOneAndDelete()`
 
 ### **Auth server methods**
 
-1. `handleSignup()` : Users create account with username, password (basic, bearer,
+1. `handleSignup()` - Users create account with username, password (basic, bearer,
 
    - This will create an object with (username, password, and role)
    - Will need a users constructor saved to a variable (record)
-   - Generate a token using the bearer middleware and attach it to the user object ( we will `use set()` )
+   - Generate a token using the basicAuth middleware and attach it to the user object ( we will `use set()` )
    - Need to save the users record ---> `record.save()`
 
-1. `handleLogin()` : Login with unique password
+1. `handleLogin()` - Login with unique password
 
    - Need to read the Bearer token in the auth header and use the user model to validate the users token.
    - Uses the Bearer middleware
@@ -166,7 +182,7 @@ As we will be operating a virtual storefront, this application requires at least
          - Explore other's articles
      - If not valid return an error
 
-1. `handleUsers():` What will admin's privileges be?
+1. `handleUsers()` - What will admin's privileges be?
 
 ### Controller (routes)
 
@@ -200,4 +216,5 @@ POST ‘/login’ --- where people login to the system ( basic-auth middleware, 
 - What is the best way to store a blog post?
 - How do we grab one specific article? Will the user need to know the specific information about it (author, article name, date posted, id)? Do we want to have the search function search for key words? categories?
 - How does the like/clap feature work?
+  - It will be a `POST`
 - How does sharing the article work? Just grab the articles url? `this.article.url`? --- seems to easy...

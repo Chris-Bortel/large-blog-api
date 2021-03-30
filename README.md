@@ -10,6 +10,8 @@ Node.js crud application that powers the [Large Blog](#) - client
 
 - [How to write a good README.md](https://flower.codes/writing-a-damn-good-readme-file/)
 - [Good README.md](https://github.com/fzaninotto/Faker)
+- [Cloundinary](https://www.npmjs.com/package/cloudinary) is a package that manages uploading images
+
 - [ci/cd](http://xyz.com) (GitHub Actions)
 - [back-end server url](http://xyz.com) (when applicable)
 - [front-end application](http://xyz.com) (when applicable)
