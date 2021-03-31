@@ -218,3 +218,7 @@ POST ‘/login’ --- where people login to the system ( basic-auth middleware, 
 - How does the like/clap feature work?
   - It will be a `POST`
 - How does sharing the article work? Just grab the articles url? `this.article.url`? --- seems to easy...
+
+- **Auth** --- Storing the user's secure information in the same place as their articles, likes, comments, and the like? OR should I have a separate user model that has that sort of thing? Leaning towards one user model since all of the data will be attached to that user
+
+**OR** Do I need to make an association to the user object when creating an article.
