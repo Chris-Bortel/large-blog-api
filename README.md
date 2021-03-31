@@ -6,11 +6,15 @@ Node.js crud application that powers the [Large Blog](#) - client
 
 ### Technologies
 
+- [morgan](https://www.npmjs.com/package/morgan) - HTTP request **logger** middleware for node.js
+
+- [winston](https://www.npmjs.com/package/winston) - A simple and universal logging library with support for multiple transports
+- [Cloundinary](https://www.npmjs.com/package/cloudinary) - Package that manages uploading images
+
 ### Links and Resources
 
 - [How to write a good README.md](https://flower.codes/writing-a-damn-good-readme-file/)
 - [Good README.md](https://github.com/fzaninotto/Faker)
-- [Cloundinary](https://www.npmjs.com/package/cloudinary) is a package that manages uploading images
 
 - [ci/cd](http://xyz.com) (GitHub Actions)
 - [back-end server url](http://xyz.com) (when applicable)
