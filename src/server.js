@@ -24,9 +24,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // app.use(timeStamp);
 // app.use(logger);
-// Error handles
-// app.use('*', notFoundHandler);
-// app.use(errorHandler);
+
+// Error handlers
+app.use('*', notFoundHandler);
+app.use(errorHandler);
 
 module.exports = {
   server: app,
