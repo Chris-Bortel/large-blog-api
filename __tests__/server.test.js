@@ -6,8 +6,8 @@ const mockRequest = supergoose(server);
 console.log = jest.fn();
 
 describe('sever tests', () => {
-  xit('should respond with a 200 on a valid route', async () => {
-    const result = await mockRequest.get('/listings');
+  it('should respond with a 200 on a valid route', async () => {
+    const result = await mockRequest.get('/demo');
     expect(result.status).toBe(200);
   });
 
