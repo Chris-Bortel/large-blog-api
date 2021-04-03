@@ -34,6 +34,13 @@ users.pre('findOneAndUpdate', async function () {
   this._update.password = await bcrypt.hash(this._update.password, 5);
 });
 
+/**
+ * This async function will take a user name and password as two params, query the database with the user name, try to find a match. If no match is found, we have NULL as the return of the entire function;
+ * If a user if found, it will compare the given plain password with the user's encrypted password and get a boolean as result.
+ * If valid, return the user obj, otherwise return null.
+ * @param {string} username
+ * @param {string} password
+ */
 users.statics.basicValidation = async function (username, password) {
   let query = { username };
   try {
@@ -42,7 +49,8 @@ users.statics.basicValidation = async function (username, password) {
     let isValid = await bcrypt.compare(password, user.password);
     return isValid ? user : null;
   } catch (err) {
-    console.error(err);
+    //TODO: Need to test
+    throw new Error('Invalid User');
   }
 };
 
@@ -55,12 +63,14 @@ users.methods.tokenGenerator = function () {
   };
   return jwt.sign(token, SECRET);
 };
-
+// TODO: Need to test
 users.methods.validation = function (username) {
   let query = { username };
   return this.findOne(query);
 };
 
+// TODO: Test and refactor to account for a user not being found
+// Test for throwing an 'Invalid Token' error message
 users.statics.authenticateToken = function (token) {
   try {
     let parsedToken = jwt.verify(token, SECRET);
@@ -68,6 +78,7 @@ users.statics.authenticateToken = function (token) {
     return this.findById(parsedToken.id);
   } catch (e) {
     throw new Error('Invalid Token');
+    // throw new Error(e.message)
   }
 };
 

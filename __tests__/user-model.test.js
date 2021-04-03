@@ -106,4 +106,7 @@ describe('user model tests', () => {
     expect(updateUser.password).not.toBe(fakeUser.password);
     expect(updateUser.password).not.toBe(newUserPass);
   });
+
+  // line 65-70
+  it('should return a token for the queried id ', async () => {});
 });
