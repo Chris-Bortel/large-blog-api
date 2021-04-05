@@ -1,4 +1,5 @@
 'use strict';
+
 require('@code-fellows/supergoose');
 const bearerAuth = require('../src/auth/middleware/bearerAuth.js');
 const User = require('../src/auth/models/userModel.js');
