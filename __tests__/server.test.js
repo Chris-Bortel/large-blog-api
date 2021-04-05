@@ -17,7 +17,7 @@ describe('sever tests', () => {
   });
 
   it('should respond with a 404 on an invalid method', async () => {
-    const response = await mockRequest.put('/food');
+    const response = await mockRequest.put('/demo');
     expect(response.status).toBe(404);
   });
 });

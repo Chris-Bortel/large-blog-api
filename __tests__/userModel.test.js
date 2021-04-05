@@ -2,7 +2,7 @@
 
 require('@code-fellows/supergoose');
 const jwt = require('jsonwebtoken');
-const User = require('../src/auth/models/user-model.js');
+const User = require('../src/auth/models/userModel.js');
 const SECRET = process.env.SECRET || 'supersecret';
 console.log = jest.fn();
 
