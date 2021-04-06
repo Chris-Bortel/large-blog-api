@@ -10,9 +10,9 @@ Built with the purpose of allowing users a place to compose and post articles or
 JavaScript, Node.js, Express, Axios, Superagent, Jest, MongoDB, Mongoose, Base-64, Bcrypt, JWT, Cors, Morgan
 <br>
 
-## Planning, requirements, and stories
+## Planning, requirements, and stories [documentation](./requirement.md)
 
-Please view the full scope of this projects requirement and planning [**_here_**](./requirement.md)
+Please view the full scope of this projects requirement and planning above
 
 ### Further documentation to come soon...
 
