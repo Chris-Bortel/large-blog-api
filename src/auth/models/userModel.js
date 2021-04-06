@@ -23,7 +23,7 @@ const users = new mongoose.Schema({
     enum: ['admin', 'user'],
   },
 });
-
+// TODO: Refactor for virtuals
 users.pre('save', async function () {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 5);

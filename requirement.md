@@ -1,6 +1,6 @@
 # Requirements
 
-Documentation for the development of the [Large Blog](./README.md)
+Documentation for the development of the [**Large Blog API**](./README.md)
 
 <br>
 
@@ -222,3 +222,15 @@ POST ‘/login’ --- where people login to the system ( basic-auth middleware, 
 - **Auth** --- Storing the user's secure information in the same place as their articles, likes, comments, and the like? OR should I have a separate user model that has that sort of thing? Leaning towards one user model since all of the data will be attached to that user
 
 **OR** Do I need to make an association to the user object when creating an article.
+
+#### Links and references
+
+- [morgan](https://www.npmjs.com/package/morgan) - HTTP request **logger** middleware for node.js
+
+- [winston](https://www.npmjs.com/package/winston) - A simple and universal logging library with support for multiple transports
+
+- [Cloundinary](https://www.npmjs.com/package/cloudinary) - Package that manages uploading images
+
+- [How to write a good README.md](https://flower.codes/writing-a-damn-good-readme-file/)
+
+- [Good README.md](https://github.com/fzaninotto/Faker)
