@@ -1,0 +1,112 @@
+'use strict';
+
+require('@code-fellows/supergoose');
+const jwt = require('jsonwebtoken');
+const User = require('../src/auth/models/userModel.js');
+const SECRET = process.env.SECRET || 'supersecret';
+console.log = jest.fn();
+
+afterEach(async () => {
+  await User.deleteMany({});
+});
+
+const fakeUser = {
+  username: 'username',
+  password: 'password',
+  role: 'user',
+};
+
+describe('user model tests', () => {
+  it('should save hashed password', async () => {
+    //1. create a new user and save it to database
+    const newUser = await new User(fakeUser).save();
+    //2. check the username matches our fake user
+    expect(newUser.username).toBe(fakeUser.username);
+    //3. check the password do NOT match the fake user.
+    expect(newUser.password).not.toBe(fakeUser.password);
+  });
+
+  it('should valid known user', async () => {
+    //1. create a new user and save it to database
+    const newUser = await new User(fakeUser).save();
+    //2. try to find this user and authenticate based on user name and password.
+    const foundUser = await User.basicValidation(
+      fakeUser.username,
+      fakeUser.password
+    );
+    //3. expect the return user obj contains the same info.
+    expect(foundUser.username).toBe(newUser.username);
+  });
+
+  it('should NOT validate unknown user or user with a bad password', async () => {
+    //1. create a new user and save it to database
+    await new User(fakeUser).save();
+    //2. try to find this user and authenticate based on user name and BAD password.
+    const withBadPassword = await User.basicValidation(
+      fakeUser.username,
+      'bad-password'
+    );
+    //3. expect the return is null
+    expect(withBadPassword).toBeNull();
+    //4. try to find a unknown user
+    const withBadUserName = await User.basicValidation(
+      'badUserName',
+      fakeUser.password
+    );
+    //5. of course you'll get null
+    expect(withBadUserName).toBeNull();
+  });
+
+  it('should generate a token', async () => {
+    //1. create new user, save it, and get a token.
+    const user = await new User(fakeUser).save();
+    const token = user.tokenGenerator();
+    //2. hopefully this token does exsit
+    expect(token).toBeDefined();
+    //3. do reverse engineering work, check what the heck it is
+    const verifiedToken = jwt.verify(token, SECRET);
+    //4. I hope it contains the proper info
+    expect(verifiedToken.role).toBe(user.role);
+    expect(verifiedToken.username).toBe(user.username);
+  });
+
+  it('should authenticate token and find the user obj from DB', async () => {
+    //1. create new user, save it, and get a token.
+    const user = await new User(fakeUser).save();
+    const token = user.tokenGenerator();
+    //2. hopefully this token does exist
+    expect(token).toBeDefined();
+    //3. do reverse engineering work with this token try to find the user Obj
+    const foundUser = await User.authenticateToken(token);
+    //4. hopefully it contains the user info.
+    expect(foundUser.username).toBe(user.username);
+    expect(foundUser.role).toBe(user.role);
+
+    expect(() => {
+      User.authenticateToken('somebadtoken');
+    }).toThrow('Invalid Token');
+  });
+
+  it("should save hashed password when updating user's info", async () => {
+    //1. create a new user and save it to database
+    const newUser = await new User(fakeUser).save();
+    const newUserPass = newUser.password;
+
+    //2. modify the password
+    fakeUser.password = 'newpassword';
+
+    const updateUser = await User.findOneAndUpdate(
+      { username: newUser.username },
+      { password: fakeUser.password },
+      { new: true }
+    );
+    //3. check the username matches our fake user
+    expect(updateUser.username).toBe(fakeUser.username);
+    //4. check the password do NOT match the fake user.
+    expect(updateUser.password).not.toBe(fakeUser.password);
+    expect(updateUser.password).not.toBe(newUserPass);
+  });
+
+  // line 65-70
+  it('should return a token for the queried id ', async () => {});
+});

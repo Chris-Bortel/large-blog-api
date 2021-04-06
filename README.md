@@ -1,22 +1,28 @@
-# Large Blog API
+# **Large Blog API** - Under Development
 
 <!-- Description (No need for a header here) -->
 
-Node.js crud application that powers the [Large Blog](#) - client
+Node.js crud application that will power the `Large Blog` - client.
+Built with the purpose of allowing users a place to compose and post articles or blog entries their thoughts, expertise, or stories( think `Medium` ). `Large Blog` also allows users to read other articles, like articles, make comments, and follow other users
 
-### Technologies
+## Technologies
 
-### Links and Resources
+JavaScript, Node.js, Express, Axios, Superagent, Jest, MongoDB, Mongoose, Base-64, Bcrypt, JWT, Cors, Morgan
+<br>
 
-- [How to write a good README.md](https://flower.codes/writing-a-damn-good-readme-file/)
-- [Good README.md](https://github.com/fzaninotto/Faker)
-- [Cloundinary](https://www.npmjs.com/package/cloudinary) is a package that manages uploading images
+## Planning, requirements, and stories
 
-- [ci/cd](http://xyz.com) (GitHub Actions)
+Please view the full scope of this projects requirement and planning [**_here_**](./requirement.md)
+
+### Further documentation to come soon...
+
+<!-- ## Links and Resources -->
+
+<!-- - [ci/cd](http://xyz.com) (GitHub Actions)
 - [back-end server url](http://xyz.com) (when applicable)
-- [front-end application](http://xyz.com) (when applicable)
+- [front-end application](http://xyz.com) (when applicable) -->
 
-### Setup
+<!-- ## Setup
 
 #### `.env` requirements (where applicable)
 
@@ -39,8 +45,12 @@ i.e.
 
 #### Planning documents
 
-- [Requirements](./requirement)
-
+- [Requirements](./requirement) -->
+<!--
 #### UML
 
 Link to an image of the UML for your application and response to events
+
+#### TODOs:
+
+- Revisit `500 error` handler and make it better/test it -->
