@@ -30,7 +30,7 @@ describe('user model tests', () => {
     //1. create a new user and save it to database
     const newUser = await new User(fakeUser).save();
     //2. try to find this user and authenticate based on user name and password.
-    const foundUser = await User.basicValidation(
+    const foundUser = await User.authenticateBasic(
       fakeUser.username,
       fakeUser.password
     );
@@ -42,14 +42,14 @@ describe('user model tests', () => {
     //1. create a new user and save it to database
     await new User(fakeUser).save();
     //2. try to find this user and authenticate based on user name and BAD password.
-    const withBadPassword = await User.basicValidation(
+    const withBadPassword = await User.authenticateBasic(
       fakeUser.username,
       'bad-password'
     );
     //3. expect the return is null
     expect(withBadPassword).toBeNull();
     //4. try to find a unknown user
-    const withBadUserName = await User.basicValidation(
+    const withBadUserName = await User.authenticateBasic(
       'badUserName',
       fakeUser.password
     );
@@ -77,13 +77,13 @@ describe('user model tests', () => {
     //2. hopefully this token does exist
     expect(token).toBeDefined();
     //3. do reverse engineering work with this token try to find the user Obj
-    const foundUser = await User.authenticateToken(token);
+    const foundUser = await User.authenticateWithToken(token);
     //4. hopefully it contains the user info.
     expect(foundUser.username).toBe(user.username);
     expect(foundUser.role).toBe(user.role);
 
     expect(() => {
-      User.authenticateToken('somebadtoken');
+      User.authenticateWithToken('somebadtoken');
     }).toThrow('Invalid Token');
   });
 

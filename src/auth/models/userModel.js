@@ -20,10 +20,27 @@ const users = new mongoose.Schema({
     type: String,
     required: true,
     default: 'user',
-    enum: ['admin', 'user'],
+    enum: ['user', 'editor', 'admin'],
   },
 });
-// TODO: Refactor for virtuals
+// Virtuals
+
+users.virtual('token').get(function () {
+  let tokenObject = {
+    username: this.username,
+  };
+  return jwt.sign(tokenObject, SECRET);
+});
+
+users.virtual('capabilities').get(function () {
+  let acl = {
+    user: ['read'],
+    editor: ['read', 'create', 'update'],
+    admin: ['read', 'create', 'update', 'delete'],
+  };
+  return acl[this.role];
+});
+
 users.pre('save', async function () {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 5);
@@ -41,7 +58,7 @@ users.pre('findOneAndUpdate', async function () {
  * @param {string} username
  * @param {string} password
  */
-users.statics.basicValidation = async function (username, password) {
+users.statics.authenticateBasic = async function (username, password) {
   let query = { username };
   try {
     let user = await this.findOne(query);
@@ -71,7 +88,8 @@ users.methods.validation = function (username) {
 
 // TODO: Test and refactor to account for a user not being found
 // Test for throwing an 'Invalid Token' error message
-users.statics.authenticateToken = function (token) {
+
+users.statics.authenticateWithToken = function (token) {
   try {
     let parsedToken = jwt.verify(token, SECRET);
 

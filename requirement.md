@@ -108,7 +108,7 @@ This will hold all our app’s database Schemas and Models.
 
 - Generate token
 
-- AuthenticateToken
+- authenticateWithToken
 
 ### **Controllers: Main server methods**
 
