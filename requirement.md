@@ -10,6 +10,7 @@ Documentation for the development of the [**Large Blog API**](./README.md)
 
 - Sign up, sign in, and have role based authorization
 
+- Update user info (password, )
 - See all articles, without login
 
 - View all articles, save articles that I like (e.g. clap), as well as write, edit, delete own articles, when logged in
@@ -77,23 +78,53 @@ This will hold all our app’s database Schemas and Models.
 
   - article_text: {type: string, required}
 
-  - content: {type: Number, required}
+  - content: {type: string, required}
 
     - **How am I going to do this?**
 
   - comments: {type: string, --- it will need to be attached to the user object of the commenter}
 
   - category: {type: A pre-listed array, required}
+
+   import mongoose from 'mongoose';
+   const { Schema } = mongoose;
+
+   const blogSchema = new Schema({
+      title:  String, // String is shorthand for {type: String},
+      category: ???,
+      author: String,
+      body:   String,
+      image_url: String,
+      comments: [{ body: String, date: Date }],
+      date: { type: Date, default: Date.now },
+      hidden: Boolean,
+      meta: {
+         viewed: ???,
+         likes: Number,
+         favs:  Number
+      }
+  });
 ```
 
-1. Users
+1. User _authenticated_
 
 ```
-   username: {type: string, Required}
-
-   password: {type: string, hashed. Required}
-
+   username: {type: string, Required},
+   password: {type: string, hashed. Required},
    role: {type: string, Required enum: [must separate regular user from Admin]}
+```
+
+```
+1. UserAccount:
+
+   - email
+   - followers
+   - following
+   - written articles
+   - saved articles
+   - liked articles?
+      - Should liked articles dictate what articles are suggested???
+
 ```
 
 **Methods:**
