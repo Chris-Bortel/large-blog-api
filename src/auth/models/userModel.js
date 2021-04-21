@@ -27,10 +27,23 @@ const users = new mongoose.Schema({
 
 users.virtual('token').get(function () {
   let tokenObject = {
+    id: this._id,
     username: this.username,
+    role: this.role,
   };
   return jwt.sign(tokenObject, SECRET);
 });
+
+// TODO: Do I want the additional properties attached to the token object?
+// users.methods.tokenGenerator = function () {
+//   let token = {
+//     id: this._id,
+//     username: this.username,
+//     role: this.role,
+//     // capabilities: this.capabilities,
+//   };
+//   return jwt.sign(token, SECRET);
+// };
 
 users.virtual('capabilities').get(function () {
   let acl = {
@@ -71,15 +84,6 @@ users.statics.authenticateBasic = async function (username, password) {
   }
 };
 
-users.methods.tokenGenerator = function () {
-  let token = {
-    id: this._id,
-    username: this.username,
-    role: this.role,
-    // capabilities: this.capabilities,
-  };
-  return jwt.sign(token, SECRET);
-};
 // TODO: Need to test
 users.methods.validation = function (username) {
   let query = { username };
