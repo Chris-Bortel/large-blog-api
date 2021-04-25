@@ -261,3 +261,7 @@ POST ‘/login’ --- where people login to the system ( basic-auth middleware, 
 **OR** Do I need to make an association to the user object when creating an article.
 
 #### Links and references
+
+- Below is an UML for the structure of my database. I was originally planning to use this solution, but have since wanted to take a look at `SubDocuments` more research to do. -[Mongoose SubDocuments](https://mongoosejs.com/docs/subdocs.html)
+
+![Mongoose SubDocuments](./UML.png)

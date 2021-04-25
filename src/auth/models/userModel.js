@@ -11,20 +11,22 @@ const SECRET = process.env.SECRET;
 const users = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  first_name: { type: String },
-  last_name: { type: String },
-  profileImgUrl: { type: String },
-  // TODO: set: toLower may break things
-  // email: { type: String, validate: [isEmail, 'invalid email'], set: toLower },
   role: {
     type: String,
     required: true,
     default: 'user',
     enum: ['user', 'editor', 'admin'],
   },
+  // TODO: Needs to go into a separate model
+  // first_name: { type: String },
+  // last_name: { type: String },
+  // profileImgUrl: { type: String },
+  // TODO: set: toLower may break things
+  // email: { type: String, validate: [isEmail, 'invalid email'], set: toLower },
 });
 // Virtuals
 
+// TODO: Since I have this set up as a virtual, do I need id and role? Theoretically, they should be attached to the capabilities
 users.virtual('token').get(function () {
   let tokenObject = {
     id: this._id,
