@@ -11,19 +11,51 @@ const SECRET = process.env.SECRET;
 const users = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  first_name: { type: String },
-  last_name: { type: String },
-  profileImgUrl: { type: String },
-  // TODO: set: toLower may break things
-  // email: { type: String, validate: [isEmail, 'invalid email'], set: toLower },
   role: {
     type: String,
     required: true,
     default: 'user',
-    enum: ['admin', 'user'],
+    enum: ['user', 'editor', 'admin'],
   },
+  // TODO: Needs to go into a separate model
+  // first_name: { type: String },
+  // last_name: { type: String },
+  // profileImgUrl: { type: String },
+  // TODO: set: toLower may break things
+  // email: { type: String, validate: [isEmail, 'invalid email'], set: toLower },
 });
-// TODO: Refactor for virtuals
+// Virtuals
+
+// TODO: Since I have this set up as a virtual, do I need id and role? Theoretically, they should be attached to the capabilities
+users.virtual('token').get(function () {
+  let tokenObject = {
+    id: this._id,
+    username: this.username,
+    role: this.role,
+  };
+  return jwt.sign(tokenObject, SECRET);
+});
+
+// TODO: Do I want the additional properties attached to the token object?
+// users.methods.tokenGenerator = function () {
+//   let token = {
+//     id: this._id,
+//     username: this.username,
+//     role: this.role,
+//     // capabilities: this.capabilities,
+//   };
+//   return jwt.sign(token, SECRET);
+// };
+
+users.virtual('capabilities').get(function () {
+  let acl = {
+    user: ['read'],
+    editor: ['read', 'create', 'update'],
+    admin: ['read', 'create', 'update', 'delete'],
+  };
+  return acl[this.role];
+});
+
 users.pre('save', async function () {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 5);
@@ -41,7 +73,7 @@ users.pre('findOneAndUpdate', async function () {
  * @param {string} username
  * @param {string} password
  */
-users.statics.basicValidation = async function (username, password) {
+users.statics.authenticateBasic = async function (username, password) {
   let query = { username };
   try {
     let user = await this.findOne(query);
@@ -54,15 +86,6 @@ users.statics.basicValidation = async function (username, password) {
   }
 };
 
-users.methods.tokenGenerator = function () {
-  let token = {
-    id: this._id,
-    username: this.username,
-    role: this.role,
-    // capabilities: this.capabilities,
-  };
-  return jwt.sign(token, SECRET);
-};
 // TODO: Need to test
 users.methods.validation = function (username) {
   let query = { username };
@@ -71,7 +94,8 @@ users.methods.validation = function (username) {
 
 // TODO: Test and refactor to account for a user not being found
 // Test for throwing an 'Invalid Token' error message
-users.statics.authenticateToken = function (token) {
+
+users.statics.authenticateWithToken = function (token) {
   try {
     let parsedToken = jwt.verify(token, SECRET);
 

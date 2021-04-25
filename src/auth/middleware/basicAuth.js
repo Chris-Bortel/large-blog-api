@@ -22,7 +22,7 @@ module.exports = async (req, res, next) => {
     let credentials = base64.decode(encoded);
     let [username, password] = credentials.split(':');
 
-    let validUser = await User.basicValidation(username, password);
+    let validUser = await User.authenticateBasic(username, password);
 
     if (validUser) {
       req.token = await validUser.tokenGenerator();
