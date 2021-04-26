@@ -19,4 +19,4 @@ class Model {
   }
 }
 
-module.exports = Article;
+module.exports = Model;
