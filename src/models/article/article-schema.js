@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+require('mongoose-schema-jsonschema')(mongoose);
 
 const article = mongoose.Schema({
   title: { type: String, required: true },
