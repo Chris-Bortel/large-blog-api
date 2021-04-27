@@ -1,20 +1,20 @@
 'use strict';
 
 class Model {
-  constructor(schema) {
-    this.schema = schema;
+  constructor(model) {
+    this.model = model;
   }
 
   create(newRecord) {
-    record = new schema(newRecord);
+    record = new this.model(newRecord);
     return record.save();
   }
 
   read(id) {
     if (!id) {
-      return schema.find({});
+      return model.find({});
     } else {
-      return schema.findById(id);
+      return model.findById(id);
     }
   }
 }
