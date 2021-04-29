@@ -106,15 +106,12 @@ favs: Number
 }
 });
 
-### Authenticated user
+### Categories:
 
-1. User _authenticated_
+Categories are going to be pre loaded. Users will be able to select what category their article will be saved under, allowing users to search for the topic of articles that they are wanting to view.
 
-```
-   username: {type: string, Required},
-   password: {type: string, hashed. Required},
-   role: {type: string, Required enum: [must separate regular user from Admin]}
-```
+- name: { type: String, required: true },
+- description: { type: String },
 
 ### User profile
 
@@ -128,10 +125,15 @@ favs: Number
    - liked articles?
      - Should liked articles dictate what articles are suggested???
 
-1. Categories:
+### Authenticated user
 
-- name: { type: String, required: true },
-- description: { type: String },
+1. User _authenticated_
+
+```
+   username: {type: string, Required},
+   password: {type: string, hashed. Required},
+   role: {type: string, Required enum: [must separate regular user from Admin]}
+```
 
 **Methods:**
 
@@ -146,8 +148,6 @@ favs: Number
 - Generate token
 
 - authenticateWithToken
-
-1. Categories:
 
 ### **Controllers: Main server methods**
 
