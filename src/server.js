@@ -26,7 +26,7 @@ app.use(morgan('combined'));
 
 // Route Definitions
 // app.use(authRoutes);
-app.use('/api/v1', v1Routes);
+app.use(v1Routes);
 
 app.use(timeStamp);
 // app.use(logger);
