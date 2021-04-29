@@ -16,7 +16,7 @@ class DataCollection {
   }
 
   create(record) {
-    let newRecord = this.model();
+    let newRecord = this.model(record);
     return newRecord.save();
   }
 
