@@ -7,7 +7,9 @@ const morgan = require('morgan');
 const timeStamp = require('./middleware/timestamp.js');
 const notFoundHandler = require('./middleware/404.js');
 const errorHandler = require('./middleware/error.js');
+
 const v1Routes = require('./api/v1.js');
+// const authRouter = './auth/routes/router.js';
 
 const app = express();
 
@@ -19,15 +21,6 @@ app.use(cors());
 
 app.use(morgan('combined'));
 
-// app.get('/demo', demoRouteHandler);
-
-// function demoRouteHandler(req, res) {
-//   res.status(200).send('I work');
-// }
-
-// const authRouter = './auth/routes/router.js';
-// const v1Routes = './api/v1.js';
-
 // Route Definitions
 // app.use(authRoutes);
 app.use('/api/v1', v1Routes);
@@ -37,7 +30,7 @@ app.use(timeStamp);
 
 // Error handlers
 app.use('*', notFoundHandler);
-// app.use(errorHandler);
+app.use(errorHandler);
 
 module.exports = {
   server: app,

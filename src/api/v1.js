@@ -8,6 +8,9 @@ const router = express.Router();
 
 const models = new Map();
 
+// This pre-loads all of the models so that we do not need to have module specific routes
+// TODO: Modularize this
+
 router.param('model', (req, res, next) => {
   const modelName = req.params.model;
   if (models.has(modelName)) {
