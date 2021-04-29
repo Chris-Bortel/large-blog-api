@@ -4,29 +4,26 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
-const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(cors());
-app.use(morgan('combined'));
-
 const timeStamp = require('./middleware/timestamp.js');
 const notFoundHandler = require('./middleware/404.js');
 const errorHandler = require('./middleware/error.js');
 
-app.get('/demo', demoRouteHandler);
-
-function demoRouteHandler(req, res) {
-  res.status(200).send('I work');
-}
+const v1Routes = require('./api/v1.js');
 // const authRouter = './auth/routes/router.js';
-// const v1Routes = './api/v1.js';
+
+const app = express();
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
+
+app.use(morgan('combined'));
 
 // Route Definitions
 // app.use(authRoutes);
-// app.use('/api/v1/', v1Routes);
+app.use('/api/v1', v1Routes);
 
 app.use(timeStamp);
 // app.use(logger);

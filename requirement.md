@@ -63,58 +63,58 @@ This will hold all our app’s database Schemas and Models.
 
 - Articles
 - Users
+- Categories
 
 - The following fields/data types must be supported by your data model
 
+### Articles
+
 1. Articles: _(How do we save the article in the db? Formatting it and the like is different from what I have done in the past)_
 
-```
+- title: {type: string, required}
 
-  - title: {type: string, required}
+- likes: {type: Number}
 
-  - likes: {type: Number}
+- author: {type: string, required, role: [], user-identification}
 
-  - author: {type: string, required, role: [], user-identification}
+- article_text: {type: string, required}
 
-  - article_text: {type: string, required}
+- content: {type: string, required}
 
-  - content: {type: string, required}
+  - **How am I going to do this?**
 
-    - **How am I going to do this?**
+- comments: {type: string, --- it will need to be attached to the user object of the commenter}
 
-  - comments: {type: string, --- it will need to be attached to the user object of the commenter}
+- category: {type: A pre-listed array, required}
 
-  - category: {type: A pre-listed array, required}
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
-   import mongoose from 'mongoose';
-   const { Schema } = mongoose;
+const blogSchema = new Schema({
+title: String, // String is shorthand for {type: String},
+category: ???,
+author: String,
+body: String,
+image_url: String,
+comments: [{ body: String, date: Date }],
+date: { type: Date, default: Date.now },
+hidden: Boolean,
+meta: {
+viewed: ???,
+likes: Number,
+favs: Number
+}
+});
 
-   const blogSchema = new Schema({
-      title:  String, // String is shorthand for {type: String},
-      category: ???,
-      author: String,
-      body:   String,
-      image_url: String,
-      comments: [{ body: String, date: Date }],
-      date: { type: Date, default: Date.now },
-      hidden: Boolean,
-      meta: {
-         viewed: ???,
-         likes: Number,
-         favs:  Number
-      }
-  });
-```
+### Categories:
 
-1. User _authenticated_
+Categories are going to be pre loaded. Users will be able to select what category their article will be saved under, allowing users to search for the topic of articles that they are wanting to view.
 
-```
-   username: {type: string, Required},
-   password: {type: string, hashed. Required},
-   role: {type: string, Required enum: [must separate regular user from Admin]}
-```
+- name: { type: String, required: true },
+- description: { type: String },
 
-```
+### User profile
+
 1. UserAccount:
 
    - email
@@ -123,8 +123,16 @@ This will hold all our app’s database Schemas and Models.
    - written articles
    - saved articles
    - liked articles?
-      - Should liked articles dictate what articles are suggested???
+     - Should liked articles dictate what articles are suggested???
 
+### Authenticated user
+
+1. User _authenticated_
+
+```
+   username: {type: string, Required},
+   password: {type: string, hashed. Required},
+   role: {type: string, Required enum: [must separate regular user from Admin]}
 ```
 
 **Methods:**
