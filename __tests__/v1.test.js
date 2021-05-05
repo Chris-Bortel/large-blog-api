@@ -16,17 +16,17 @@ describe('v1 web server', () => {
     expect(response.status).toBe(404);
   });
 
-  // TODO: FAILING: Model routes are not linked up or something...
-  xit('can create a new record', async () => {
+  // TODO: FAILING: ASYNC is timing out... model routes are not linked up or something...
+  it('can create a new record', async () => {
     const newRecord = {
       name: 'History',
     };
-    console.log('newRecord:::::::::::::::;', newRecord);
+    // console.log('newRecord:::::::::::::::;', newRecord);
 
     const response = await mockRequest
       .post('/api/v1/categories')
       .send(newRecord);
-    console.log('Response:::::::::::::::;', response);
+    // console.log('Response:::::::::::::::;', response);
     expect(response.status).toBe(201);
   });
 
