@@ -28,8 +28,8 @@ describe('v1 web server', () => {
   });
 
   // TODO: FAILING: Model routes are not linked up or something...
-  xit('can get a list of all records', async () => {
-    const response = await mockRequest.get('/api/v1/article');
+  it('can get a list of all records', async () => {
+    const response = await mockRequest.get('/api/v1/categories');
     expect(response.status).toBe(200);
     // expect(Array.isArray(response.body)).toBeTruthy();
     // expect(response.body.length).toEqual(1);
