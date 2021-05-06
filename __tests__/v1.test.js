@@ -1,10 +1,11 @@
 'use strict';
 
 const { server } = require('../src/server.js');
-const supertest = require('supertest');
+// const supertest = require('supertest');
 
-const mockRequest = supertest(server);
-
+// const mockRequest = supertest(server);
+const supergoose = require('@code-fellows/supergoose');
+const mockRequest = supergoose(server);
 describe('v1 web server', () => {
   it('should respond with a 404 with a bad route', async () => {
     const response = await mockRequest.get('/badRoute');
@@ -18,15 +19,11 @@ describe('v1 web server', () => {
 
   // TODO: FAILING: ASYNC is timing out... model routes are not linked up or something...
   it('can create a new record', async () => {
-    const newRecord = {
+    const data = {
       name: 'History',
     };
-    // console.log('newRecord:::::::::::::::;', newRecord);
 
-    const response = await mockRequest
-      .post('/api/v1/categories')
-      .send(newRecord);
-    // console.log('Response:::::::::::::::;', response);
+    const response = await mockRequest.post('/api/v1/categories').send(data);
     expect(response.status).toBe(201);
   });
 
