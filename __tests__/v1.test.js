@@ -17,19 +17,30 @@ describe('v1 web server', () => {
     expect(response.status).toBe(404);
   });
 
-  // TODO: FAILING: ASYNC is timing out... model routes are not linked up or something...
   it('can create a new record', async () => {
     const data = {
-      name: 'History',
+      title: 'Lorem Ipsum - a history',
+      author: 'John Doh',
+      article_body:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      category: 'History',
     };
 
-    const response = await mockRequest.post('/api/v1/categories').send(data);
+    const response = await mockRequest.post('/api/v1/article').send(data);
     expect(response.status).toBe(201);
+    console.log('Response.............', response.body.data);
+
+    // Check for whether we are receiving an id
+    expect(response.body._id).toBeDefined();
+    // Check to see whether the data sent is in the database
+    Object.keys(response.body.data).forEach((key) => {
+      expect(response.body.data[key]).toEqual(data[key]);
+    });
   });
 
   // TODO: FAILING: Model routes are not linked up or something...
   it('can get a list of all records', async () => {
-    const response = await mockRequest.get('/api/v1/categories');
+    const response = await mockRequest.get('/api/v1/article');
     expect(response.status).toBe(200);
     // expect(Array.isArray(response.body)).toBeTruthy();
     // expect(response.body.length).toEqual(1);
