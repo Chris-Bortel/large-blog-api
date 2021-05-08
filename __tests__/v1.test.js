@@ -28,22 +28,23 @@ describe('v1 web server', () => {
 
     const response = await mockRequest.post('/api/v1/article').send(data);
     expect(response.status).toBe(201);
-    console.log('Response.............', response.body.data);
+    console.log('Response.............', response.body);
+    // TODO: Why is jest expecting Expected: {"article_body": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "author": "John Doh", "category": "History", "title": "Lorem Ipsum - a history"} Received: undefined
+    // TODO: How do I fix it!?
 
+    expect(response.body.data).toEqual(data);
     // Check for whether we are receiving an id
     expect(response.body._id).toBeDefined();
     // Check to see whether the data sent is in the database
-    Object.keys(response.body.data).forEach((key) => {
-      expect(response.body.data[key]).toEqual(data[key]);
-    });
   });
 
   // TODO: FAILING: Model routes are not linked up or something...
   it('can get a list of all records', async () => {
     const response = await mockRequest.get('/api/v1/article');
     expect(response.status).toBe(200);
-    // expect(Array.isArray(response.body)).toBeTruthy();
-    // expect(response.body.length).toEqual(1);
+    expect(Array.isArray(response.body)).toBeTruthy();
+    expect(response.body.length).toEqual(1);
+    console.log(response.body);
   });
 
   it('can get a single record', async () => {});
