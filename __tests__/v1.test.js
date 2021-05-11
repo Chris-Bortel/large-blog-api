@@ -24,7 +24,7 @@ describe('v1 web server', () => {
   });
 
   it('can create a new record', async () => {
-    const response = await mockRequest.post('/api/v1/article').send(data);
+    const response = await mockRequest.post(`/api/v1/article`).send(data);
     expect(response.status).toBe(201);
     // Check for whether we are receiving an id
     expect(response.body._id).toBeDefined();
@@ -42,25 +42,26 @@ describe('v1 web server', () => {
     expect(response.status).toBe(200);
     // Checking for the data type of the response
     expect(Array.isArray(response.body)).toBeTruthy();
-    // TODO: Why is this not working when response.body is and array of one?
     console.log(response.body);
+    // TODO: Why is this not working when response.body is and array of one?
     // expect(response.body.length).toEqual(1);
   });
 
-  // TODO: This is not receiving the body/ The id is always changing, so if I put the actual id in there, it returns null
-  xit('can get a single record', async () => {
-    const response = await mockRequest.get('/api/v1/article/1');
+  it('can get a single record', async () => {
+    const response = await mockRequest.get(`/api/v1/article/${1}`);
     console.log(response.body);
     expect(response.status).toBe(200);
+    //TODO: This may be the issue as well?
     expect(typeof response.body).toEqual('object');
     expect(response.body._id).toBeDefined();
-    expect(response.body.id).toEqual(1);
+    expect(response.body._id).toEqual(body._id);
   });
 
   it('can update a record', async () => {});
 
   it('can delete a record', async () => {});
 });
+// TODO: This is not receiving the body/ The id is always changing, so if I put the actual id in there, it returns null
 
 // it('can create a new record', async () => {
 //   const data = {
