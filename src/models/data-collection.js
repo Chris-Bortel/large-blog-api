@@ -21,11 +21,11 @@ class DataCollection {
   }
 
   update(_id, record) {
-    return this.model.findOneAndUpdate(_id, record, { new: true });
+    return this.model.findByIdAndUpdate(_id, record, { new: true });
   }
 
   delete(_id) {
-    return this.model.findOneAndDelete(_id);
+    return this.model.findByIdAndDelete(_id);
   }
 }
 

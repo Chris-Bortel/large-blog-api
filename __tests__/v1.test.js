@@ -4,6 +4,7 @@ const { server } = require('../src/server.js');
 
 const supergoose = require('@code-fellows/supergoose');
 const mockRequest = supergoose(server);
+
 describe('v1 web server', () => {
   const data = {
     title: 'Lorem Ipsum - a history',
@@ -48,13 +49,18 @@ describe('v1 web server', () => {
   });
 
   it('can get a single record', async () => {
-    const response = await mockRequest.get(`/api/v1/article/${1}`);
-    console.log(response.body);
-    expect(response.status).toBe(200);
+    const response = await mockRequest.post(`/api/v1/article`).send(data);
+    expect(response.status).toBe(201);
+    const response2 = await mockRequest.get(
+      `/api/v1/article/${response.body._id}`
+    );
+    console.log(response2.body);
+    expect(response2.status).toBe(200);
     //TODO: This may be the issue as well?
-    expect(typeof response.body).toEqual('object');
-    expect(response.body._id).toBeDefined();
-    expect(response.body._id).toEqual(body._id);
+    expect(typeof response2.body).toEqual('object');
+    expect(response2.body._id).toBeDefined();
+    expect(response2.body._id).toEqual(response.body._id);
+    expect(response2.body.title).toEqual(response.body.title);
   });
 
   it('can update a record', async () => {});
