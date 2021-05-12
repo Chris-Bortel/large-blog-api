@@ -21,7 +21,7 @@ afterAll(async () => {
 
 let res = {};
 
-describe('basic auth tests', () => {
+xdescribe('basic auth tests', () => {
   it('should not validate sign-in if user provide a bad token', async () => {
     let req = {
       headers: {

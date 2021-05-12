@@ -268,6 +268,8 @@ POST ‘/login’ --- where people login to the system ( basic-auth middleware, 
 
 **OR** Do I need to make an association to the user object when creating an article.
 
+- At which point do we have a user make a user profile? On sign up we are giving them authorization and an account, at that point do they need to be prompted to make an account? How does the additional data get attached to that profile over time?
+
 #### Links and references
 
 - Below is an UML for the structure of my database. I was originally planning to use this solution, but have since wanted to take a look at `SubDocuments` more research to do. -[Mongoose SubDocuments](https://mongoosejs.com/docs/subdocs.html)

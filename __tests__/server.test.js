@@ -5,9 +5,9 @@ const supergoose = require('@code-fellows/supergoose');
 const mockRequest = supergoose(server);
 console.log = jest.fn();
 
-describe('sever tests', () => {
+xdescribe('server tests', () => {
   it('should respond with a 200 on a valid route', async () => {
-    const result = await mockRequest.get('/demo');
+    const result = await mockRequest.get('/api/v1/user');
     expect(result.status).toBe(200);
   });
 
