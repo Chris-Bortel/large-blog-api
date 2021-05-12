@@ -67,17 +67,24 @@ describe('v1 web server', () => {
   });
 
   it('can delete a record', async () => {
-    console.log(data);
-    const response1 = await mockRequest.post(`api/v1/article`).send(data);
-    console.log(response1);
-    expect(response1.status).toBe(201);
-    // const response2 = await mockRequest
-    //   .delete(`api/v1/article/${response1.body._id}`)
-    //   .send('Deleted');
-    // console.log(response2);
-    // expect(response2.status).toBe(204);
-    // expect(response2.body).toBeFalsy();
+    const data2 = {
+      title: 'Lorem Ipsum - a history',
+      author: 'John Doh',
+      article_body:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      category: 'History',
+    };
 
+    const response1 = await mockRequest.post(`/api/v1/article`).send(data2);
+    expect(response1.status).toBe(201);
+    const response2 = await mockRequest.delete(
+      `/api/v1/article/${response1.body._id}`
+    );
+
+    expect(response2.status).toBe(204);
+    expect(response2.body).toEqual({});
+
+    // TODO: figure out BeforeAll()
     // const getResponse = await mockRequest.get(`/api/v1/article`);
     // expect(getResponse.body.length).toEqual(0);
   });
