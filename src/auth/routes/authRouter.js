@@ -41,7 +41,7 @@ authRouter.post('signin', basicAuth, (req, res, next) => {
 
 authRouter.get(
   '/users',
-  bearer,
+  bearerAuth,
   userPermissions('delete'),
   async (req, res, next) => {
     // find all users
