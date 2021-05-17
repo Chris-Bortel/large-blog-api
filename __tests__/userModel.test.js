@@ -57,7 +57,7 @@ describe('user model tests', () => {
     expect(withBadUserName).toBeNull();
   });
 
-  it('should generate a token', async () => {
+  xit('should generate a token', async () => {
     //1. create new user, save it, and get a token.
     const user = await new User(fakeUser).save();
     const token = user.tokenGenerator();
@@ -70,7 +70,7 @@ describe('user model tests', () => {
     expect(verifiedToken.username).toBe(user.username);
   });
 
-  it('should authenticate token and find the user obj from DB', async () => {
+  xit('should authenticate token and find the user obj from DB', async () => {
     //1. create new user, save it, and get a token.
     const user = await new User(fakeUser).save();
     const token = user.tokenGenerator();

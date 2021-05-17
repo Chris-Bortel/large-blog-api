@@ -34,6 +34,8 @@ module.exports = async (req, res, next) => {
       return;
     }
   } catch (err) {
+    console.log(err);
+    // next('Invalid Login')
     next(err);
   }
 };
