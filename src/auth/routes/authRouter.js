@@ -19,6 +19,7 @@ authRouter.post('/signup', async (req, res, next) => {
       user: userRecord,
       token: userRecord.token,
     };
+
     // send the outputObject
     res.status(201).json(outputObject);
     // output an object with the user record and the attach token'
