@@ -1,33 +1,12 @@
 'use strict';
 
-const fs = require('fs');
 const express = require('express');
-const Collection = require('../models/data-collection.js');
 
 const router = express.Router();
-
-const models = new Map();
+const modelFinder = require('../middleware/modalFinder.js');
 
 // This pre-loads all of the models so that we do not need to have module specific routes
-// TODO: Modularize this
-
-router.param('model', (req, res, next) => {
-  const modelName = req.params.model;
-  if (models.has(modelName)) {
-    req.model = models.get(modelName);
-    next();
-  } else {
-    const fileName = `${__dirname}/../models/${modelName}/model.js`;
-    if (fs.existsSync(fileName)) {
-      const model = require(fileName);
-      models.set(modelName, new Collection(model));
-      req.model = models.get(modelName);
-      next();
-    } else {
-      next('Invalid Model');
-    }
-  }
-});
+router.param('model', modelFinder);
 
 router.get('/:model', handleGetAll);
 router.get('/:model/:id', handleGetOne);
