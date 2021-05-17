@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const Model = require('../models/mongo.js');
+const Model = require('../models/data-collection.js');
 
 const models = new Map();
 

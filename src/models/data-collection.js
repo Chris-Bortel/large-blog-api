@@ -1,7 +1,7 @@
 'use strict';
 
-// This takes in a schema and builds the REST methodology. Will be connected through the router
-
+// This takes in a schema and builds the REST methodology.
+// Is required in the router
 class DataCollection {
   constructor(model) {
     this.model = model;
