@@ -9,7 +9,7 @@ const notFoundHandler = require('./middleware/404.js');
 const errorHandler = require('./middleware/error.js');
 
 const v1Routes = require('./api/v1.js');
-// const authRouter = './auth/routes/router.js';
+const authRouter = require('./auth/routes/authRouter.js');
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use(cors());
 app.use(morgan('combined'));
 
 // Route Definitions
-// app.use(authRoutes);
+app.use(authRouter);
 app.use('/api/v1', v1Routes);
 
 app.use(timeStamp);

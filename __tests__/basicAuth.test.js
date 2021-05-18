@@ -38,7 +38,7 @@ describe('basic auth tests', () => {
     expect(next).toHaveBeenCalledWith(invalidErr);
   });
 
-  it('should validate sign-in if user provides valid username and password', async () => {
+  xit('should validate sign-in if user provides valid username and password', async () => {
     let req = {
       headers: {
         authorization: 'Basic YWRtaW46cGFzc3dvcmQ=',
