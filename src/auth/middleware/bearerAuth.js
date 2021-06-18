@@ -24,6 +24,6 @@ module.exports = async (req, res, next) => {
     return;
   }
   req.user = validUser;
-  req.token = token;
+  req.token = validUser.token;
   next();
 };

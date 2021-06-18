@@ -95,9 +95,9 @@ users.methods.validation = function (username) {
 // TODO: Test and refactor to account for a user not being found
 // Test for throwing an 'Invalid Token' error message
 
-users.statics.authenticateWithToken = function (token) {
+users.statics.authenticateWithToken = async function (token) {
   try {
-    let parsedToken = jwt.verify(token, SECRET);
+    let parsedToken = await jwt.verify(token, SECRET);
 
     return this.findById(parsedToken.id);
   } catch (e) {

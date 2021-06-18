@@ -38,7 +38,7 @@ describe('basic auth tests', () => {
     expect(next).toHaveBeenCalledWith(invalidErr);
   });
 
-  xit('should validate sign-in if user provides valid username and password', async () => {
+  it('should validate sign-in if user provides valid username and password', async () => {
     let req = {
       headers: {
         authorization: 'Basic YWRtaW46cGFzc3dvcmQ=',
@@ -47,7 +47,7 @@ describe('basic auth tests', () => {
 
     let next = jest.fn();
     await basicAuth(req, res, next);
-    expect(next).toHaveBeenCalledWith();
+    expect(next).toHaveBeenCalledWith(201);
   });
 
   it('should block user with no header authorization', async () => {
