@@ -23,16 +23,19 @@ module.exports = async (req, res, next) => {
     let [username, password] = credentials.split(':');
 
     let validUser = await User.authenticateBasic(username, password);
-
-    if (validUser) {
-      req.token = await validUser.authenticateWithToken();
-      req.user = validUser;
-      next();
-      return 'success';
-    } else {
-      next(invalidErr);
-      return;
-    }
+    console.log('valid user:::::::::::::::::::;', validUser);
+    next();
+    // if (validUser) {
+    //   req.token = await User.authenticateWithToken();
+    //   console.log('hello!!!!!!!!!!!!!!', req.token);
+    //   req.user = validUser;
+    //   console.log('Valid USER::::::::::::!!!!!!!!!!', validUser);
+    //   next();
+    //   return 'success';
+    // } else {
+    //   next(invalidErr);
+    //   return;
+    // }
   } catch (err) {
     console.log(err);
     // next('Invalid Login')

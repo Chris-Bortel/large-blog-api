@@ -1,6 +1,6 @@
 'use strict';
 
-const e = require('express');
+// const e = require('express');
 
 module.exports = (capability) => {
   return (req, res, next) => {

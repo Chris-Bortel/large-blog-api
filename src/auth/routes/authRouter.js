@@ -19,7 +19,7 @@ authRouter.post('/signup', async (req, res, next) => {
       user: userRecord,
       token: userRecord.token,
     };
-
+    console.log(outputObject);
     // send the outputObject
     res.status(201).json(outputObject);
     // output an object with the user record and the attach token'
@@ -29,7 +29,7 @@ authRouter.post('/signup', async (req, res, next) => {
 });
 
 // Build a '/signin' route
-authRouter.post('signin', basicAuth, (req, res, next) => {
+authRouter.post('/signin', basicAuth, (req, res, next) => {
   // take the new user and send it
   const user = {
     user: req.user,

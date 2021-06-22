@@ -27,7 +27,7 @@ describe('basic auth tests', () => {
       },
     };
 
-    let next = jest.fn();
+    const next = jest.fn();
 
     const invalidErr = {
       message_spec: 'Invalid username or password. Please try again.',
@@ -41,13 +41,15 @@ describe('basic auth tests', () => {
   it('should validate sign-in if user provides valid username and password', async () => {
     let req = {
       headers: {
+        // authorization:
+        // 'Basic $2b$05$gxR/bV1XSzLsXZas7lGYYeVCvRVQJYVkZ9ZaBAcS8jORgZt9p221.',
         authorization: 'Basic YWRtaW46cGFzc3dvcmQ=',
       },
     };
 
     let next = jest.fn();
     await basicAuth(req, res, next);
-    expect(next).toHaveBeenCalledWith(201);
+    expect(next).toHaveBeenCalledWith();
   });
 
   it('should block user with no header authorization', async () => {
