@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
   };
 
   if (!req.headers.authorization) {
-    next(invalidErr);
+    next();
     return;
   }
 

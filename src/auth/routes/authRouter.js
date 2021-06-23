@@ -4,10 +4,10 @@
 const express = require('express');
 const authRouter = express.Router();
 
+const User = require('../models/userModel.js');
 const basicAuth = require('../middleware/basicAuth.js');
 const bearerAuth = require('../middleware/bearerAuth.js');
 const userPermissions = require('../middleware/acl.js');
-const User = require('../models/userModel.js');
 
 // Build a '/signup' route
 authRouter.post('/signup', async (req, res, next) => {
@@ -19,7 +19,7 @@ authRouter.post('/signup', async (req, res, next) => {
       user: userRecord,
       token: userRecord.token,
     };
-    console.log(outputObject);
+    console.log(outputObject.token);
     // send the outputObject
     res.status(201).json(outputObject);
     // output an object with the user record and the attach token'
@@ -35,6 +35,7 @@ authRouter.post('/signin', basicAuth, (req, res, next) => {
     user: req.user,
     token: req.user.token,
   };
+  console.log('USER::::::::::::::', user);
   res.status(200).json(user);
 });
 

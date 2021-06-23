@@ -87,19 +87,23 @@ users.statics.authenticateBasic = async function (username, password) {
 };
 
 // TODO: Need to test
-users.methods.validation = function (username) {
-  let query = { username };
-  return this.findOne(query);
-};
+// users.static.validation = function (username) {
+//   let query = this.findOne({ username });
+//   return this.findOne(query);
+// };
 
 // TODO: Test and refactor to account for a user not being found
 // Test for throwing an 'Invalid Token' error message
 
 users.statics.authenticateWithToken = function (token) {
   try {
-    let parsedToken = jwt.verify(token, SECRET);
+    const parsedToken = jwt.verify(token, SECRET);
     console.log('Parsed Token!!!!!!!!!', parsedToken);
-    return this.findById(parsedToken.id);
+    const user = this.findOne({ username: parsedToken.username });
+    if (user) {
+      return user;
+    }
+    // return this.findById(parsedToken.id);
   } catch (e) {
     throw new Error('Invalid Token');
     // throw new Error(e.message)

@@ -24,18 +24,19 @@ module.exports = async (req, res, next) => {
 
     let validUser = await User.authenticateBasic(username, password);
     console.log('valid user:::::::::::::::::::;', validUser);
-    next();
-    // if (validUser) {
-    //   req.token = await User.authenticateWithToken();
-    //   console.log('hello!!!!!!!!!!!!!!', req.token);
-    //   req.user = validUser;
-    //   console.log('Valid USER::::::::::::!!!!!!!!!!', validUser);
-    //   next();
-    //   return 'success';
-    // } else {
-    //   next(invalidErr);
-    //   return;
-    // }
+
+    // why did I write it
+    if (validUser) {
+      req.token = await User.authenticateWithToken();
+      console.log('hello!!!!!!!!!!!!!!', req.token);
+      req.user = validUser;
+      console.log('Valid USER::::::::::::!!!!!!!!!!', validUser);
+      next();
+      return 'success';
+    } else {
+      next(invalidErr);
+      return;
+    }
   } catch (err) {
     console.log(err);
     // next('Invalid Login')
