@@ -24,8 +24,9 @@ module.exports = async (req, res, next) => {
 
     let validUser = await User.authenticateBasic(username, password);
 
+    // why did I write it
     if (validUser) {
-      req.token = await validUser.tokenGenerator();
+      req.token = await User.generateToken();
       req.user = validUser;
       next();
       return 'success';

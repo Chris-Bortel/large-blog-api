@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
   };
 
   if (!req.headers.authorization) {
-    next(invalidErr);
+    next();
     return;
   }
 
@@ -19,11 +19,11 @@ module.exports = async (req, res, next) => {
   let validUser;
   try {
     validUser = await user.authenticateWithToken(token);
+    req.user = validUser;
+    req.token = validUser.token;
   } catch (err) {
     next(invalidErr);
     return;
   }
-  req.user = validUser;
-  req.token = token;
   next();
 };

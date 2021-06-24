@@ -57,7 +57,7 @@ describe('Auth Router', () => {
       });
 
       xit('can sign in a user with basic authentication', async () => {
-        //on sign in, we should receive a password and a username
+        //on sign in, we should receive a user object that includes a username, user id, and a token
       });
 
       xit('can sign in a user with bearer authentication', async () => {});
@@ -67,6 +67,8 @@ describe('Auth Router', () => {
       xit('basic does not sign an unknown user in', () => {});
 
       xit('bearer does not sign in a user with invalid credentials', {});
+
+      xit('should let only the admin see all of the users');
     });
   });
 });
