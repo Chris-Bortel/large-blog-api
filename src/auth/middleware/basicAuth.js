@@ -27,7 +27,7 @@ module.exports = async (req, res, next) => {
 
     // why did I write it
     if (validUser) {
-      req.token = await User.authenticateWithToken();
+      req.token = await User.generateToken();
       console.log('hello!!!!!!!!!!!!!!', req.token);
       req.user = validUser;
       console.log('Valid USER::::::::::::!!!!!!!!!!', validUser);

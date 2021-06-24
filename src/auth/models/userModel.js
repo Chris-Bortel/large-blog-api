@@ -66,6 +66,18 @@ users.pre('findOneAndUpdate', async function () {
   this._update.password = await bcrypt.hash(this._update.password, 5);
 });
 
+users.methods.can = function (capability) {
+  return roles[this.role].includes(capability);
+};
+users.statics.generateToken = function () {
+  let tokenObject = {
+    username: this.username,
+    role: this.role,
+    // permissions: role[this.role],
+  };
+  let token = jwt.sign(tokenObject, process.env.SECRET);
+  return token;
+};
 /**
  * This async function will take a user name and password as two params, query the database with the user name, try to find a match. If no match is found, we have NULL as the return of the entire function;
  * If a user if found, it will compare the given plain password with the user's encrypted password and get a boolean as result.
