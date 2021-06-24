@@ -23,14 +23,11 @@ module.exports = async (req, res, next) => {
     let [username, password] = credentials.split(':');
 
     let validUser = await User.authenticateBasic(username, password);
-    console.log('valid user:::::::::::::::::::;', validUser);
 
     // why did I write it
     if (validUser) {
       req.token = await User.generateToken();
-      console.log('hello!!!!!!!!!!!!!!', req.token);
       req.user = validUser;
-      console.log('Valid USER::::::::::::!!!!!!!!!!', validUser);
       next();
       return 'success';
     } else {

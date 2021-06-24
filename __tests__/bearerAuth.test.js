@@ -10,9 +10,10 @@ beforeAll(async (done) => {
   const user = await new User({
     username: 'admin',
     password: 'password',
-    role: 'admin',
+    // role: 'admin',
   }).save();
-  token = user.tokenGenerator();
+  // token = user.generateToken();
+  // console.log(token);
   done();
 });
 afterAll(async () => {
@@ -21,11 +22,11 @@ afterAll(async () => {
 
 let res = {};
 
-xdescribe('basic auth tests', () => {
+describe('basic auth tests', () => {
   it('should not validate sign-in if user provide a bad token', async () => {
     let req = {
       headers: {
-        authorization: 'a bad token for sure',
+        authorization: 'a bad token',
       },
     };
     let next = jest.fn();
@@ -50,7 +51,7 @@ xdescribe('basic auth tests', () => {
     expect(next).toHaveBeenCalledWith();
   });
 
-  it('should not validate sign-in if user provide NO token', async () => {
+  xit('should not validate sign-in if user provide NO token', async () => {
     let req = {
       headers: {},
     };

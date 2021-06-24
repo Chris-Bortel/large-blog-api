@@ -19,11 +19,11 @@ module.exports = async (req, res, next) => {
   let validUser;
   try {
     validUser = await user.authenticateWithToken(token);
+    req.user = validUser;
+    req.token = validUser.token;
   } catch (err) {
     next(invalidErr);
     return;
   }
-  req.user = validUser;
-  req.token = validUser.token;
   next();
 };
