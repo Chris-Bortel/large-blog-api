@@ -72,13 +72,18 @@ describe('user model tests', () => {
 
   it('should authenticate token and find the user obj from DB', async () => {
     //1. create new user, save it, and get a token.
-    await new User(fakeUser).save();
+
+    console.log(fakeUser);
+    let user = await new User(fakeUser).save();
+    console.log(user);
     const token = User.generateToken();
     //2. hopefully this token does exist
     expect(token).toBeDefined();
     //3. do reverse engineering work with this token try to find the User Obj
     const foundUser = await User.authenticateWithToken(token);
-    //4. hopefully it contains the User info.
+    console.log(token);
+    //4. hopefully it contains the User info
+    console.log(username);
     expect(foundUser.username).toBe(User.username);
     expect(foundUser.role).toBe(User.role);
 

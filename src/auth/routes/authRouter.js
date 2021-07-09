@@ -47,16 +47,26 @@ authRouter.get(
   userPermissions('delete'),
   async (req, res, next) => {
     // find all users
-    const users = await User.find({});
-    const userList = users.map(user.username);
-    // return a list of all the users
-    res.status(200).json(userList);
+    try {
+      const users = await User.find({});
+      const userList = users.map((user) => user.username);
+      console.log(userList);
+      // return a list of all the users
+      res.status(200).json(userList);
+    } catch (e) {
+      throw new Error('Invalid access');
+    }
   }
 );
 
 // Build the secret route
-authRouter.get('/secret', bearerAuth, async (req, res, next) => {
-  res.status(200).send('This is secret');
-});
+authRouter.get(
+  '/secret',
+  bearerAuth,
+  userPermissions('delete'),
+  async (req, res, next) => {
+    res.status(200).send('This is secret');
+  }
+);
 
 module.exports = authRouter;
