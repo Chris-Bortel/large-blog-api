@@ -10,29 +10,35 @@ afterEach(async () => {
   await User.deleteMany({});
 });
 
-const fakeUser = {
-  username: 'username',
-  password: 'password',
-  role: 'user',
+let users = {
+  admin: {
+    username: 'username',
+    password: 'pass',
+  },
 };
+
+// beforeAll(async (done) => {
+//   await new Users(users.admin).save();
+//   done();
+// });
 
 describe('user model tests', () => {
   it('should save hashed password', async () => {
     //1. create a new user and save it to database
-    const newUser = await new User(fakeUser).save();
+    const newUser = await new User(users.admin).save();
     //2. check the username matches our fake user
-    expect(newUser.username).toBe(fakeUser.username);
+    expect(newUser.username).toBe(users.admin.username);
     //3. check the password do NOT match the fake user.
-    expect(newUser.password).not.toBe(fakeUser.password);
+    expect(newUser.password).not.toBe(users.admin.password);
   });
 
   it('should validate known user', async () => {
     //1. create a new user and save it to database
-    const newUser = await new User(fakeUser).save();
+    const newUser = await new User(users.admin).save();
     //2. try to find this user and authenticate based on user name and password.
     const foundUser = await User.authenticateBasic(
-      fakeUser.username,
-      fakeUser.password
+      users.admin.username,
+      users.admin.password
     );
     //3. expect the return user obj contains the same info.
     expect(foundUser.username).toBe(newUser.username);
@@ -40,10 +46,10 @@ describe('user model tests', () => {
 
   it('should NOT validate unknown user or user with a bad password', async () => {
     //1. create a new user and save it to database
-    await new User(fakeUser).save();
+    await new User(users.admin).save();
     //2. try to find this user and authenticate based on user name and BAD password.
     const withBadPassword = await User.authenticateBasic(
-      fakeUser.username,
+      users.admin.username,
       'bad-password'
     );
     //3. expect the return is null
@@ -51,7 +57,7 @@ describe('user model tests', () => {
     //4. try to find a unknown user
     const withBadUserName = await User.authenticateBasic(
       'badUserName',
-      fakeUser.password
+      users.admin.password
     );
     //5. of course you'll get null
     expect(withBadUserName).toBeNull();
@@ -73,18 +79,22 @@ describe('user model tests', () => {
   it('should authenticate token and find the user obj from DB', async () => {
     //1. create new user, save it, and get a token.
 
+    await new User(fakeUser).save();
     console.log(fakeUser);
-    let user = await new User(fakeUser).save();
-    console.log(user);
+    // console.log(user)
+
     const token = User.generateToken();
     //2. hopefully this token does exist
     expect(token).toBeDefined();
     //3. do reverse engineering work with this token try to find the User Obj
+    let validatedUser = User.findOne();
+    console.log('MAYBE!!!!!!!!!!!', validatedUser);
+    //TODO: I need to figure out how to make this work with the entire user obj
     const foundUser = await User.authenticateWithToken(token);
     console.log(token);
     //4. hopefully it contains the User info
-    console.log(username);
-    expect(foundUser.username).toBe(User.username);
+    // console.log(username);
+    expect(foundUser.token).toBe(User.token);
     expect(foundUser.role).toBe(User.role);
 
     expect(() => {
