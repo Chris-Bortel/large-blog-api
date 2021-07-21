@@ -69,6 +69,7 @@ users.pre('findOneAndUpdate', async function () {
 users.methods.can = function (capability) {
   return roles[this.role].includes(capability);
 };
+
 users.statics.generateToken = function () {
   let tokenObject = {
     username: this.username,

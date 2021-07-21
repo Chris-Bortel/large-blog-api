@@ -56,6 +56,8 @@ describe('Auth Router', () => {
         // expect(results.username).toBe(obj.username);
       });
 
+      xit('can send the outputObject on signup', async () => {});
+
       xit('can sign in a user with basic authentication', async () => {
         //on sign in, we should receive a user object that includes a username, user id, and a token
       });
