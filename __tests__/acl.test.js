@@ -17,23 +17,16 @@ let users = {
 
 // Pre-load our database with fake users
 beforeAll(async (done) => {
-  const user = await new User(users.admin).save();
-  console.log(user);
-  // const token = jwt.sign(users, process.env.SECRET);
-  token = user.generateToken();
+  // const user = await new User(users.admin).save();
+  // console.log(user);
+  token = jwt.sign(users.admin, process.env.SECRET);
   console.log(token);
   done();
 });
 
 describe('Access control tests', () => {
-  // it('should respond with a 200 on a valid route', async () => {
-  //   const result = await mockRequest.get('/api/v1/article');
-  //   expect(result.status).toBe(200);
-  // });
-
   it('should allow an admin to access the "/users" route', async () => {
     console.log(users.admin);
-    const token = jwt.sign(users, process.env.SECRET);
     console.log(token);
 
     const aclResponse = await mockRequest.get('/users');
